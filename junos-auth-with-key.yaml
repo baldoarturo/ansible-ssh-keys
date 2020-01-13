@@ -1,0 +1,22 @@
+---
+- hosts: all
+  gather_facts: no
+
+  vars_prompt:
+    - name: "ansible_user"
+      prompt: "Username"
+      private: no
+
+    - name: "ansible_password"
+      prompt: "Password"
+      private: yes
+
+  tasks:
+    - name: Get uptime
+      junos_command:
+        commands:
+            - show system uptime
+      register: uptime
+    
+    - name: Show uptime
+      debug: var=uptime
